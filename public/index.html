@@ -21,7 +21,10 @@
         <!-- SPELLS -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+        <link href="bootstrap.css" rel="stylesheet">
+        <link href="bootstrap-switch.css" rel="stylesheet">
         <script src="core.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">
 
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
@@ -36,14 +39,50 @@
                 <!-- TODO LIST -->
                 <div id="todo-list" class="row">
                         <div class="col-sm-4 col-sm-offset-4">
-
-                                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                                <div class="checkbox" ng-repeat="todo in todos">
+                                <div class="row">
                                         <label>
-                                                <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                                        </label>
+                                                <input type="radio" ng-model="todoOption" ng-value="1">
+                                                To do
+                                        </label><br/>
+                                        <label>
+                                                <input type="radio" ng-model="todoOption" ng-value="2">
+                                                Done
+                                        </label><br/>
+                                        <label>
+                                                <input type="radio" ng-model="todoOption" ng-value="3">
+                                                All
+                                        </label><br/>
                                 </div>
 
+                                <div ng-repeat="todo in todos" style="display:inline-block" ng-show="todoOption == 1 && todo.done == false">
+                                                <label class="switch">
+                                                        <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo._id, todo.done)">
+                                                        <div class="slider round"></div>
+                                                </label> 
+                                                {{todo.text}}
+        
+                                                <img src="basket.png" ng-click="deleteTodo(todo._id)">
+                                        </div>
+
+                                <div ng-repeat="todo in todos" style="display:inline-block" ng-show="todoOption == 2 && todo.done == true">
+                                        <label class="switch">
+                                                <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo._id, todo.done)">
+                                                <div class="slider round"></div>
+                                        </label> 
+                                        {{todo.text}}
+
+                                        <img src="basket.png" ng-click="deleteTodo(todo._id)">
+                                </div>
+
+                                <div ng-repeat="todo in todos" style="display:inline-block" ng-show="todoOption == 3">
+                                        <label class="switch">
+                                                <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo._id, todo.done)">
+                                                <div class="slider round"></div>
+                                        </label> 
+                                        {{todo.text}}
+
+                                        <img src="basket.png" ng-click="deleteTodo(todo._id)">
+                                </div>
                         </div>
                 </div>
 

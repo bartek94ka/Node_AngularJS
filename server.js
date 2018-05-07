@@ -8,7 +8,8 @@ var port = 3000;
 // configuration ===============================================================
 
 // mongoose.connect('mongodb://user:password@ds052819.mlab.com:52819/mindgroup');         // connect to mongoDB database on modulus.io
-mongoose.connect('mongodb://bkaczorowski:Password1!@ds227469.mlab.com:27469/mlabdatabase');
+// mongoose.connect('mongodb://user1:User1!@ds227469.mlab.com:27469/mlabdatabase');
+mongoose.connect('mongodb://user2:password1!@ds227469.mlab.com:27469/mlabdatabase');
 //zalozyc baze na mlab.com lub mongodbatlas
 
 app.configure(function() {
@@ -77,6 +78,18 @@ var Todo = mongoose.model('Todo', {
                                 res.json(todos);
                         });
                 });
+        });
+
+        app.put('/api/todos/:todo_id', function(req, res){
+                console.log(req);
+                Todo.findOneAndUpdate({
+                        _id : req.params.todo_id
+                }, { $set: { "done" : req.body.done }}
+                , function(err, todo) {
+                        if(err)
+                            res.send(err)
+                        res.json(todo)
+                    });
         });
 
         // application -------------------------------------------------------------
